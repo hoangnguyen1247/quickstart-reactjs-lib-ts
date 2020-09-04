@@ -3,8 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import Helmet from 'react-helmet';
-import { Router, RouterContext } from 'react-router-dom';
-import { history, createLocation, createMemoryHistory } from "history";
+import { Router, RouterContext, match, browserHistory, createMemoryHistory } from 'react-router';
 
 import routes from './routes';
 
@@ -30,7 +29,7 @@ if (typeof document !== 'undefined') {
                     Holder.run();
                 }
             }}
-            history={history}
+            history={browserHistory}
             routes={routes}
         />,
         outlet
@@ -40,7 +39,7 @@ if (typeof document !== 'undefined') {
 // Exported static site renderer:
 export default (locals, callback) => {
     const history = createMemoryHistory();
-    const location = createLocation(locals.path);
+    const location = history.createLocation(locals.path);
 
     match({ routes, location }, (error, redirectLocation, renderProps) => {
         let url;
