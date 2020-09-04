@@ -1,0 +1,1 @@
+{"version":3,"file":"quickstart-reactjs-lib-ts.js","sources":["../src/Alert.tsx"],"sourcesContent":["import React from \"react\";\n\nexport function Alert() {{\n\n    return (\n        <div>\n            Hello\n        </div>\n    )\n}}\n"],"names":["React"],"mappings":";;;;;;;;;;aAEgB,KAAK;QAAI;YAErB,QACIA,6DAEM,EACT;SACJ;IAAA;;;;;;;;;;;;"}

@@ -3,6 +3,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import minify from 'rollup-plugin-babel-minify';
 import replace from 'rollup-plugin-replace';
+import typescript from 'rollup-plugin-typescript2'
 // Require understands JSON files.
 const packageJson = require('./package.json');
 
@@ -40,12 +41,14 @@ function baseConfig() {
                         }
                     ],
                     '@babel/preset-react',
-                    '@babel/preset-typescript',
                 ],
                 plugins: [
                     '@babel/plugin-proposal-export-default-from',
                     '@babel/plugin-proposal-export-namespace-from'
                 ]
+            }),
+            typescript({
+                typescript: require('typescript'),
             }),
         ]
     };
@@ -77,8 +80,8 @@ const libConfig = baseConfig();
 // Do not include any of the dependencies
 libConfig.external = peerDependencies.concat(dependencies);
 libConfig.output = [
-    { sourcemap: true, name: 'Reactstrap', file: 'dist/reactstrap.cjs.js', format: 'cjs' },
-    { sourcemap: true, name: 'Reactstrap', file: 'dist/reactstrap.es.js', format: 'es' },
+    { sourcemap: true, name: 'Quickstart reactjs lib ts', file: 'dist/quickstart-reactjs-lib-ts.cjs.js', format: 'cjs' },
+    { sourcemap: true, name: 'Quickstart reactjs lib ts', file: 'dist/quickstart-reactjs-lib-ts.es.js', format: 'es' },
 ];
 
 /*
@@ -92,14 +95,14 @@ libConfig.output = [
   Defining this config will also check that all peer dependencies are set up
   correctly in the globals input.
 
-  Reactstrap has two versions:
+  Quickstart reactjs lib ts has two versions:
 
-  1) `reactstrap.min.js`
+  1) `quickstart-reactjs-lib-ts.min.js`
       This file excludes `react-popper` and `react-transition-group` from
       the dist build where they need to be manually required if any
       application uses components that require these features.
 
-  2) `reactstrap.full.min.js`
+  2) `quickstart-reactjs-lib-ts.full.min.js`
       This file includes all dependencies.
 
   For both versions the peer dependencies are always excluded and must be manually
@@ -108,7 +111,7 @@ libConfig.output = [
 */
 const umdFullConfig = baseUmdConfig(false);
 umdFullConfig.output = [
-    { globals: globals(), sourcemap: true, name: 'Reactstrap', file: 'dist/reactstrap.full.js', format: 'umd' },
+    { globals: globals(), sourcemap: true, name: 'Quickstart reactjs lib ts', file: 'dist/quickstart-reactjs-lib-ts.full.js', format: 'umd' },
 ];
 
 // Validate globals in main UMD config
@@ -122,7 +125,7 @@ if (missingGlobals.length) {
 
 const umdFullConfigMin = baseUmdConfig(true);
 umdFullConfigMin.output = [
-    { globals: globals(), sourcemap: true, name: 'Reactstrap', file: 'dist/reactstrap.full.min.js', format: 'umd' },
+    { globals: globals(), sourcemap: true, name: 'Quickstart reactjs lib ts', file: 'dist/quickstart-reactjs-lib-ts.full.min.js', format: 'umd' },
 ];
 
 const external = umdFullConfig.external.slice();
@@ -137,13 +140,13 @@ const allGlobals = Object.assign({}, globals(), {
 const umdConfig = baseUmdConfig(false);
 umdConfig.external = external;
 umdConfig.output = [
-    { globals: allGlobals, sourcemap: true, name: 'Reactstrap', file: 'dist/reactstrap.js', format: 'umd' },
+    { globals: allGlobals, sourcemap: true, name: 'Quickstart reactjs lib ts', file: 'dist/quickstart-reactjs-lib-ts.js', format: 'umd' },
 ];
 
 const umdConfigMin = baseUmdConfig(true);
 umdConfigMin.external = external;
 umdConfigMin.output = [
-    { globals: allGlobals, sourcemap: true, name: 'Reactstrap', file: 'dist/reactstrap.min.js', format: 'umd' },
+    { globals: allGlobals, sourcemap: true, name: 'Quickstart reactjs lib ts', file: 'dist/quickstart-reactjs-lib-ts.min.js', format: 'umd' },
 ];
 
 
