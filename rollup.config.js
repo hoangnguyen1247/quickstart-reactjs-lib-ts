@@ -3,7 +3,9 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import minify from 'rollup-plugin-babel-minify';
 import replace from 'rollup-plugin-replace';
-import typescript from 'rollup-plugin-typescript2'
+import typescript from 'rollup-plugin-typescript2';
+import sass from 'rollup-plugin-sass';
+
 // Require understands JSON files.
 const packageJson = require('./package.json');
 
@@ -22,9 +24,22 @@ function baseConfig() {
     return {
         input: 'src/index.ts',
         plugins: [
+            sass({
+                output: 'dist/quickstart-reactjs-lib-ts.css'
+            }),
             nodeResolve(),
             commonjs({
                 include: 'node_modules/**'
+            }),
+            typescript({
+                typescript: require('typescript'),
+                tsconfigOverride: {
+                    compilerOptions: {
+                        sourceMap: false,
+                        declaration: false,
+                        declarationMap: false,
+                    },
+                }
             }),
             babel({
                 babelrc: false,
@@ -46,10 +61,7 @@ function baseConfig() {
                     '@babel/plugin-proposal-export-default-from',
                     '@babel/plugin-proposal-export-namespace-from'
                 ]
-            }),
-            typescript({
-                typescript: require('typescript'),
-            }),
+            })
         ]
     };
 }
